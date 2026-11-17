@@ -1,0 +1,776 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<title>List Midman By Yenz</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #080808;
+  --white: #f5f5f5;
+  --muted: #858585;
+  --glass: rgba(255,255,255,.045);
+  --glass-border: rgba(255,255,255,.105);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Manrope', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 15% 0%, #ffffff13, transparent 35%),
+    radial-gradient(ellipse at 90% 40%, #7777770c, transparent 40%),
+    radial-gradient(ellipse at 50% 100%, #ffffff09, transparent 45%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  opacity: .12;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.15'/%3E%3C/svg%3E");
+}
+
+.container {
+  width: min(1100px, calc(100% - 40px));
+  margin: auto;
+}
+
+.glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,.085),
+    rgba(255,255,255,.018) 50%,
+    rgba(255,255,255,.035)
+  );
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.12),
+    inset 0 -1px 1px rgba(255,255,255,.025),
+    0 12px 35px rgba(0,0,0,.18);
+  backdrop-filter: blur(24px) saturate(145%);
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+}
+
+/* NAV */
+
+nav {
+  height: 68px;
+  margin-top: 17px;
+  padding: 0 22px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 20;
+}
+
+.brand {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -.5px;
+}
+
+.brand span {
+  color: #777;
+  font-weight: 500;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: #aaa;
+  letter-spacing: 1px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ddd;
+  box-shadow: 0 0 12px #fff8;
+}
+
+/* HERO */
+
+.hero {
+  padding: 90px 0 55px;
+  border-bottom: 1px solid #ffffff16;
+}
+
+.eyebrow {
+  color: #888;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 23px;
+}
+
+.hero h1 {
+  font-size: clamp(42px, 7vw, 76px);
+  letter-spacing: -4px;
+  line-height: 1.04;
+  font-weight: 800;
+}
+
+.hero h1 span {
+  color: #777;
+}
+
+.hero p {
+  margin-top: 20px;
+  max-width: 460px;
+  color: #888;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.hero-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-top: 48px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.stats {
+  display: flex;
+  gap: 42px;
+}
+
+.stat-number {
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.stat-label {
+  color: #777;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-top: 5px;
+}
+
+/* DIRECTORY */
+
+.directory {
+  padding: 55px 0 100px;
+}
+
+.section-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.7px;
+}
+
+.section-number {
+  color: #777;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 11px;
+  margin-bottom: 20px;
+}
+
+.search-box,
+.filter-box {
+  height: 51px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  transition: .25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.search-box:focus-within,
+.filter-box:focus-within {
+  border-color: rgba(255,255,255,.35);
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.035),
+    inset 0 1px 1px rgba(255,255,255,.15);
+}
+
+.search-box input,
+.filter-box select {
+  background: transparent;
+  color: white;
+  outline: none;
+  border: none;
+  width: 100%;
+  font-family: inherit;
+  font-size: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.search-box input::placeholder {
+  color: #777;
+}
+
+.filter-box select option {
+  background: #111;
+  color: white;
+}
+
+.search-icon {
+  color: #999;
+  margin-right: 11px;
+  font-size: 17px;
+}
+
+/* LIST HEADER */
+
+.list-header {
+  display: grid;
+  grid-template-columns: 1fr 130px 100px 95px;
+  padding: 14px 19px;
+  color: #666;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.midman-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+/* GLASS CARDS */
+
+.midman-card {
+  display: grid;
+  grid-template-columns: 1fr 130px 100px 95px;
+  align-items: center;
+  padding: 17px 19px;
+  border-radius: 13px;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    background .25s ease;
+}
+
+.midman-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15%;
+  width: 70%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.25),
+    transparent
+  );
+}
+
+.midman-card::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 100px;
+  top: -80px;
+  left: -80px;
+  background: rgba(255,255,255,.045);
+  filter: blur(35px);
+  pointer-events: none;
+}
+
+.midman-card:hover {
+  transform: translateY(-2px);
+  background-color: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.22);
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+.avatar {
+  width: 41px;
+  height: 41px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg,#343434,#141414);
+  box-shadow:
+    inset 0 1px 1px #ffffff28,
+    0 4px 12px #0008;
+  color: #eee;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.person-name {
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.username {
+  color: #777;
+  font-size: 10px;
+  margin-top: 4px;
+  font-family: 'DM Mono', monospace;
+}
+
+.verified {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: linear-gradient(145deg,#fff,#aaa);
+  color: #111;
+  font-size: 9px;
+  font-weight: 900;
+  box-shadow: 0 0 10px #ffffff20;
+}
+
+.platform {
+  color: #aaa;
+  font-size: 11px;
+}
+
+.badge {
+  display: inline-block;
+  border: 1px solid #555;
+  border-radius: 6px;
+  padding: 6px 9px;
+  color: #ddd;
+  background: rgba(255,255,255,.045);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  text-align: center;
+  width: fit-content;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.badge.unverified {
+  color: #777;
+  border-color: #333;
+}
+
+.contact-btn {
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(255,255,255,.07);
+  color: white;
+  padding: 9px 12px;
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 10px;
+  cursor: pointer;
+  transition: .25s;
+  text-align: center;
+  box-shadow: inset 0 1px 1px #ffffff15;
+}
+
+.contact-btn:hover {
+  background: white;
+  color: black;
+  border-color: white;
+}
+
+.empty {
+  text-align: center;
+  padding: 55px 15px;
+  color: #777;
+  font-size: 12px;
+  display: none;
+}
+
+.empty strong {
+  display: block;
+  color: #ddd;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* FOOTER */
+
+footer {
+  border-top: 1px solid #ffffff16;
+  padding: 25px 0;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+  color: #666;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .5px;
+}
+
+/* MOBILE */
+
+@media(max-width:650px) {
+
+  .container {
+    width: calc(100% - 30px);
+  }
+
+  nav {
+    height: 62px;
+    padding: 0 15px;
+    margin-top: 12px;
+  }
+
+  .hero {
+    padding: 70px 0 40px;
+  }
+
+  .hero h1 {
+    letter-spacing: -2.5px;
+  }
+
+  .hero-bottom {
+    margin-top: 35px;
+  }
+
+  .stats {
+    gap: 28px;
+  }
+
+  .toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .list-header {
+    display: none;
+  }
+
+  .midman-list {
+    gap: 10px;
+  }
+
+  .midman-card {
+    grid-template-columns: 1fr auto;
+    gap: 13px;
+    padding: 16px 12px;
+  }
+
+  .midman-card .platform {
+    grid-column: 1;
+    padding-left: 54px;
+    margin-top: -10px;
+    font-size: 10px;
+  }
+
+  .midman-card .badge {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .midman-card .contact-btn {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .directory {
+    padding-top: 40px;
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<nav class="glass">
+  <div class="brand">ryn<span>nextdoor</span></div>
+  <div class="nav-right">
+    <span class="status-dot"></span>
+    LIST MIDMAN
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">TRUSTED MIDMAN LIST</div>
+
+  <h1>List Midman<br><span>By Yenz.</span></h1>
+
+  <p>
+    A curated directory of independent middlemen.
+    Find, search and explore listed midman profiles
+    through one central platform.
+  </p>
+
+  <div class="hero-bottom">
+    <div class="stats">
+      <div>
+        <div class="stat-number" id="totalCount">0</div>
+        <div class="stat-label">TOTAL LISTED</div>
+      </div>
+      <div>
+        <div class="stat-number" id="verifiedCount">0</div>
+        <div class="stat-label">VERIFIED</div>
+      </div>
+    </div>
+    <div class="eyebrow" style="margin:0">EST. 2026</div>
+  </div>
+</header>
+
+<main class="directory">
+
+  <div class="section-top">
+    <div class="section-title">Midman Directory</div>
+    <div class="section-number">01 -- RECORDS</div>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-box glass">
+      <span class="search-icon">⌕</span>
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search name or username..."
+        autocomplete="off"
+      >
+    </div>
+
+    <div class="filter-box glass">
+      <select id="filterSelect">
+        <option value="all">All Midman</option>
+        <option value="verified">Verified only</option>
+        <option value="unverified">Unverified</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="list-header">
+    <span>MIDMAN</span>
+    <span>PLATFORM</span>
+    <span>STATUS</span>
+    <span>CONTACT</span>
+  </div>
+
+  <div class="midman-list" id="midmanList"></div>
+
+  <div class="empty" id="emptyState">
+    <strong>No results found</strong>
+    Try another name or change your filter.
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 LIST MIDMAN BY YENZ</span>
+    <span>DIRECTORY SYSTEM / 001</span>
+  </div>
+</footer>
+
+</div>
+
+<script>
+
+/* MIDMAN DATABASE */
+
+const midmen = [
+  {
+    name: "Midman Yenz",
+    username: "@rynqzx",
+    platform: "Telegram",
+    verified: true,
+    contact: "https://t.me/rynqzx"
+  },
+  {
+    name: "Sample User",
+    username: "@sampleuser",
+    platform: "WhatsApp",
+    verified: false,
+    contact: "https://wa.me/60123456789"
+  },
+  {
+    name: "Another Midman",
+    username: "@another",
+    platform: "Telegram",
+    verified: true,
+    contact: "https://t.me/another"
+  }
+];
+
+/* DIRECTORY FUNCTIONS */
+
+const list = document.getElementById("midmanList");
+const search = document.getElementById("searchInput");
+const filter = document.getElementById("filterSelect");
+const empty = document.getElementById("emptyState");
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
+}
+
+function safeContact(value) {
+  try {
+    const url = new URL(value);
+    if (url.protocol === "https:" || url.protocol === "http:") {
+      return escapeHTML(url.href);
+    }
+  } catch (error) {}
+  return "#";
+}
+
+function renderMidmen() {
+
+  const keyword = search.value.toLowerCase().trim();
+  const status = filter.value;
+
+  const filtered = midmen.filter(person => {
+
+    const matchesSearch =
+      person.name.toLowerCase().includes(keyword) ||
+      person.username.toLowerCase().includes(keyword) ||
+      person.platform.toLowerCase().includes(keyword);
+
+    const matchesStatus =
+      status === "all" ||
+      (status === "verified" && person.verified) ||
+      (status === "unverified" && !person.verified);
+
+    return matchesSearch && matchesStatus;
+  });
+
+  list.innerHTML = "";
+
+  filtered.forEach(person => {
+
+    const initials = person.name
+      .split(" ")
+      .map(word => word[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase();
+
+    const verifiedBadge = person.verified
+      ? `<span class="verified" title="Verified">✓</span>`
+      : "";
+
+    const statusBadge = person.verified
+      ? `<span class="badge">VERIFIED</span>`
+      : `<span class="badge unverified">UNVERIFIED</span>`;
+
+    const card = document.createElement("div");
+    card.className = "midman-card glass";
+
+    card.innerHTML = `
+      <div class="person">
+        <div class="avatar">${escapeHTML(initials)}</div>
+        <div>
+          <div class="person-name">
+            ${escapeHTML(person.name)}
+            ${verifiedBadge}
+          </div>
+          <div class="username">
+            ${escapeHTML(person.username)}
+          </div>
+        </div>
+      </div>
+
+      <div class="platform">
+        ${escapeHTML(person.platform)}
+      </div>
+
+      ${statusBadge}
+
+      <a class="contact-btn"
+         href="${safeContact(person.contact)}"
+         target="_blank"
+         rel="noopener noreferrer">
+         Contact ↗
+      </a>
+    `;
+
+    list.appendChild(card);
+  });
+
+  empty.style.display = filtered.length ? "none" : "block";
+
+  document.getElementById("totalCount").textContent =
+    midmen.length;
+
+  document.getElementById("verifiedCount").textContent =
+    midmen.filter(p => p.verified).length;
+}
+
+search.addEventListener("input", renderMidmen);
+filter.addEventListener("change", renderMidmen);
+
+renderMidmen();
+
+</script>
+</body>
+</html>
+
